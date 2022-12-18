@@ -13,46 +13,66 @@ function singleRound(playerChoice, compChoice) {
   playerChoice = playerChoice.toUpperCase();
   if (playerChoice === compChoice) {
     // Tie
-    return "Tie!";
+    return 1;
   } else if (playerChoice === "ROCK") {
     if (compChoice === "SCISSORS") {
-      return "You win! " + playerChoice + " beats " + compChoice;
+      return 2;
     } else if (compChoice === "PAPER") {
-      return "You lose. " + playerChoice + " loses to " + compChoice;
+      return 0;
     }
   } else if (playerChoice === "SCISSORS") {
     if (compChoice === "ROCK") {
-      return "You lose. " + playerChoice + " loses to " + compChoice;
+      return 0;
     } else if (compChoice === "PAPER") {
-      return "You win! " + playerChoice + " beats " + compChoice;
+      return 2;
     }
   } else if (playerChoice === "PAPER") {
     if (compChoice === "ROCK") {
-      return "You win! " + playerChoice + " beats " + compChoice;
+      return 2;
     } else if (compChoice === "SCISSORS") {
-      return "You lose. " + playerChoice + " loses to " + compChoice;
+      return 0;
     }
   }
 }
 
-window.onload = function game() {
-  let pScore = 0,
-    cScore = 0;
-  while (pScore < 5 && cScore < 5) {
-    let playerChoice = window.prompt("Make your choice!");
-    while (
-      playerChoice.toLowerCase() != "rock" &&
-      playerChoice.toLowerCase() != "scissors" &&
-      playerChoice.toLowerCase() != "paper"
-    ) {
-      window.prompt("Invalid choice, try again!");
+function addButtonEventListeners() {
+  const buttons = document.querySelectorAll("button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", game);
+  });
+}
+
+let pScore = 0,
+  cScore = 0;
+
+let roundMessage = document.getElementById("round-message");
+let playAgain = document.getElementById("play-again");
+
+function game() {
+  if (pScore < 5 && cScore < 5) {
+    const pSelection = this.id;
+    console.log(pSelection);
+    let result = singleRound(pSelection, getComputerChoice());
+    if (result === 2) {
+      pScore++;
+      roundMessage.textContent =
+        "You win this round! Score: " + pScore + "-" + cScore;
+    } else if (result === 0) {
+      cScore++;
+      roundMessage.textContent =
+        "You lost this round. Score: " + pScore + "-" + cScore;
+    } else {
+      roundMessage.textContent = "It's a tie! Score: " + pScore + "-" + cScore;
     }
-    console.log(singleRound(playerChoice, getComputerChoice()));
   }
 
   if (pScore === 5) {
-    console.log("You win!");
-  } else {
-    console.log("you lose");
+    roundMessage.textContent =
+      "You won! Score: 5-" + cScore + ". Reload the page to play again!";
+  } else if (cScore === 5) {
+    roundMessage.textContent =
+      "You lose! Score: " + pScore + "-5. Reload the page to play again!";
   }
-};
+}
+
+addButtonEventListeners();
