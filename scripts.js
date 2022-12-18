@@ -35,8 +35,10 @@ function singleRound(playerChoice, compChoice) {
   }
 }
 
-function game() {
-  for (let i = 0; i < 5; i++) {
+window.onload = function game() {
+  let pScore = 0,
+    cScore = 0;
+  while (pScore < 5 && cScore < 5) {
     let playerChoice = window.prompt("Make your choice!");
     while (
       playerChoice.toLowerCase() != "rock" &&
@@ -47,4 +49,10 @@ function game() {
     }
     console.log(singleRound(playerChoice, getComputerChoice()));
   }
-}
+
+  if (pScore === 5) {
+    console.log("You win!");
+  } else {
+    console.log("you lose");
+  }
+};

@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background-color: beige;
+  text-align: center;
+  font-size: 36px;
+  font-weight: bolder;
+  padding: 16px;
+}
+
+ul {
+  margin: 16px 15%;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: large;
+  background-color: black;
+  color: darkturquoise;
+  border-radius: 6px;
+}
